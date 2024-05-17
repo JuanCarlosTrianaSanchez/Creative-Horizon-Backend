@@ -5,6 +5,8 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 
 const app = express();
 
+app.use(express.json());
+
 app.use("/api/products", productRoutes);
 
 app.use("/api/users", userRoutes);

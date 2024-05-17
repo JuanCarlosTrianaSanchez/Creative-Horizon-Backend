@@ -1,4 +1,5 @@
-import User from "../models/products.js";
+import bcrypt from "bcryptjs";
+import User from "../models/user.js";
 
 async function list(req, res) {
   try {
@@ -24,13 +25,17 @@ async function find(req, res) {
 
 async function create(req, res) {
   try {
+    const contrasenia = req.body.password;
+    const hash = await bcrypt.hash(contrasenia, 10);
+
     const elNuevoUsuario = await User.create({
+      name: req.body.name,
+      lastname: req.body.lastname,
       email: req.body.email,
-      age: req.body.age,
-      active: req.body.active,
-      hobbies: req.body.hobbies,
+      password: hash,
+      phone: req.body.phone,
       addresses: req.body.addresses,
-      birthdate: req.body.birthdate,
+      city: req.body.city,
     });
     res.json(elNuevoUsuario);
   } catch (err) {
@@ -72,6 +77,8 @@ async function destroy(req, res) {
     res.status(500).json("Server Error");
   }
 }
+
+async function login(req, res) {}
 
 export default {
   list,
