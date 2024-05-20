@@ -12,7 +12,7 @@ async function list(req, res) {
 async function find(req, res) {
   try {
     const purchaseId = req.params.id;
-    const purchase = await Product.findById(purchaseId);
+    const purchase = await Purchase.findById(purchaseId);
     if (!purchase) {
       return res.status(404).json("Product not found");
     }
@@ -71,5 +71,8 @@ async function destroy(req, res) {
 
 export default {
   list,
+  find,
   create,
+  update,
+  destroy,
 };

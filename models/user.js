@@ -11,7 +11,7 @@ const userSchema = mongoose.Schema({
   phone: Number,
   addresses: [
     {
-      type: mongoose.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Address",
     },
   ],

@@ -3,8 +3,8 @@ import User from "../models/user.js";
 
 async function list(req, res) {
   try {
-    const listadoDeUsusarios = await User.find().populate("addresses");
-    res.json(listadoDeUsusarios);
+    const users = await User.find().populate("addresses");
+    res.json(users);
   } catch (err) {
     res.status(500).json("Server Error");
   }
@@ -25,10 +25,10 @@ async function find(req, res) {
 
 async function create(req, res) {
   try {
-    const constrasenia = req.body.password;
-    const hash = await bcrypt.hash(constrasenia, 10);
+    const password = req.body.password;
+    const hash = await bcrypt.hash(password, 10);
 
-    const elNuevoUsuario = await User.create({
+    const newUser = await User.create({
       name: req.body.name,
       lastname: req.body.lastname,
       email: req.body.email,
@@ -37,7 +37,7 @@ async function create(req, res) {
       addresses: req.body.addresses,
       city: req.body.city,
     });
-    res.json(elNuevoUsuario);
+    res.json(newUser);
   } catch (err) {
     res.status(500).json("Server Error");
   }
@@ -45,23 +45,24 @@ async function create(req, res) {
 
 async function update(req, res) {
   try {
-    const usuarioEncontrado = await User.findById(req.params.id);
-    if (!usuarioEncontrado) {
+    const userFound = await User.findById(req.params.id);
+    if (!userFound) {
       return res.status(404).json("User not found");
     }
 
-    usuarioEncontrado.name = req.body.name || usuarioEncontrado.name;
-    usuarioEncontrado.lastname =
-      req.body.lastname || usuarioEncontrado.lastname;
-    usuarioEncontrado.email = req.body.email || usuarioEncontrado.email;
-    usuarioEncontrado.phone = req.body.phone || usuarioEncontrado.phone;
-    usuarioEncontrado.addresses =
-      req.body.addresses || usuarioEncontrado.addresses;
-    usuarioEncontrado.city = req.body.city || usuarioEncontrado.city;
+    userFound.name = req.body.name || userFound.name;
+    userFound.lastname = req.body.lastname || userFound.lastname;
+    userFound.email = req.body.email || userFound.email;
+    userFound.password = req.body.password
+      ? await bcrypt.hash(req.body.password, 10)
+      : usuarioEncontrado.password;
+    userFound.phone = req.body.phone || userFound.phone;
+    userFound.addresses = req.body.addresses || userFound.addresses;
+    userFound.city = req.body.city || userFound.city;
 
-    await usuarioEncontrado.save();
+    await userFound.save();
 
-    res.json(usuarioEncontrado);
+    res.json(userFound);
   } catch (err) {
     res.status(500).json("Server Error");
   }
@@ -69,8 +70,8 @@ async function update(req, res) {
 
 async function destroy(req, res) {
   try {
-    const usuarioEliminado = await User.findByIdAndDelete(req.params.id);
-    if (!usuarioEliminado) {
+    const userDelete = await User.findByIdAndDelete(req.params.id);
+    if (!userDelete) {
       return res.status(404).json("User not found");
     }
     res.json("Usuario eliminado");
