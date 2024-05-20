@@ -64,7 +64,8 @@ async function update(req, res) {
 
     res.json(userFound);
   } catch (err) {
-    res.status(500).json("Server Error");
+    console.error(err);
+    res.status(500).json({ error: err.message });
   }
 }
 
