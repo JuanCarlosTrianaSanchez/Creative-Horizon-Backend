@@ -3,7 +3,11 @@ import mongoose from "../config/mongoose.config.js";
 const userSchema = mongoose.Schema({
   name: String,
   lastname: String,
-  email: String,
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   phone: Number,
   addresses: [
     {

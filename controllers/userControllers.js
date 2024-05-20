@@ -25,8 +25,8 @@ async function find(req, res) {
 
 async function create(req, res) {
   try {
-    const contrasenia = req.body.password;
-    const hash = await bcrypt.hash(contrasenia, 10);
+    const constrasenia = req.body.password;
+    const hash = await bcrypt.hash(constrasenia, 10);
 
     const elNuevoUsuario = await User.create({
       name: req.body.name,
@@ -60,6 +60,7 @@ async function update(req, res) {
     usuarioEncontrado.city = req.body.city || usuarioEncontrado.city;
 
     await usuarioEncontrado.save();
+
     res.json(usuarioEncontrado);
   } catch (err) {
     res.status(500).json("Server Error");
@@ -78,7 +79,23 @@ async function destroy(req, res) {
   }
 }
 
-async function login(req, res) {}
+async function login(req, res) {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (user !== null) {
+      const hashValido = await bcrypt.compare(req.body.password, user.password);
+      if (hashValido) {
+        res.json("Credenciales Correctas");
+      } else {
+        res.json("Credenciales Incorrectas");
+      }
+    } else {
+      res.json("Credenciales Incorrectas");
+    }
+  } catch (err) {
+    res.status(500).json("Internal Server Error");
+  }
+}
 
 export default {
   list,
@@ -86,4 +103,5 @@ export default {
   create,
   update,
   destroy,
+  login,
 };
