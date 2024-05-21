@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 
 async function list(req, res) {
@@ -87,7 +88,12 @@ async function login(req, res) {
     if (user !== null) {
       const hashValido = await bcrypt.compare(req.body.password, user.password);
       if (hashValido) {
-        res.json("Credenciales Correctas");
+        const tokenPayload = {
+          sub: user.id,
+          iat: Date.now(),
+        };
+        const token = jwt.sign(tokenPayload, "secretPassword");
+        res.json({ token: token });
       } else {
         res.json("Credenciales Incorrectas");
       }
