@@ -4,7 +4,7 @@ const addressSchema = mongoose.Schema({
   direccion: String,
   barrio: String,
   ciudad: String,
-  country: String,
+  pais: String,
 });
 
 const Address = mongoose.model("Address", addressSchema);

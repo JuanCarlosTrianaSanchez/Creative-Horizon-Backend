@@ -10,12 +10,12 @@ const userSchema = mongoose.Schema({
   },
   password: String,
   phone: Number,
-  addresses: [
+  /* addresses: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Types.ObjectId,
       ref: "Address",
     },
-  ],
+  ], */
   city: String,
 });
 

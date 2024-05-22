@@ -1,25 +1,27 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "../models/user.js";
+import User from "../models/User.js";
 
 async function list(req, res) {
   try {
-    const users = await User.find().populate("addresses");
+    const users = await User.find(); /* .populate("addresses");
+    console.log(users); //kkkk */
     res.json(users);
   } catch (err) {
-    res.status(500).json("Server Error");
+    res.status(500).json("Server Error List");
   }
 }
 
 async function find(req, res) {
   try {
     const userId = req.params.id;
-    const user = await User.findById(userId).populate("addresses");
+    const user = await User.findById(userId); /* .populate("addresses"); */
     if (!user) {
       return res.status(404).json("User not found");
     }
     res.status(200).json(user);
   } catch (err) {
+    console.log(err);
     res.status(500).json("Server Error");
   }
 }
@@ -105,6 +107,11 @@ async function login(req, res) {
   }
 }
 
+async function profile(req, res) {
+  const { email } = await User.findById;
+  res.json("hola ${email], Puedes Acceder a tu perfil");
+}
+
 export default {
   list,
   find,
@@ -112,4 +119,5 @@ export default {
   update,
   destroy,
   login,
+  profile,
 };
