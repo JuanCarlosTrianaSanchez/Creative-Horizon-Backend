@@ -4,8 +4,7 @@ import User from "../models/User.js";
 
 async function list(req, res) {
   try {
-    const users = await User.find(); /* .populate("addresses");
-    console.log(users); //kkkk */
+    const users = await User.find().populate("addresses");
     res.json(users);
   } catch (err) {
     res.status(500).json("Server Error List");
@@ -15,13 +14,12 @@ async function list(req, res) {
 async function find(req, res) {
   try {
     const userId = req.params.id;
-    const user = await User.findById(userId); /* .populate("addresses"); */
+    const user = await User.findById(userId).populate("addresses");
     if (!user) {
       return res.status(404).json("User not found");
     }
     res.status(200).json(user);
   } catch (err) {
-    console.log(err);
     res.status(500).json("Server Error");
   }
 }
@@ -58,7 +56,7 @@ async function update(req, res) {
     userFound.email = req.body.email || userFound.email;
     userFound.password = req.body.password
       ? await bcrypt.hash(req.body.password, 10)
-      : usuarioEncontrado.password;
+      : userFound.password;
     userFound.phone = req.body.phone || userFound.phone;
     userFound.addresses = req.body.addresses || userFound.addresses;
     userFound.city = req.body.city || userFound.city;
@@ -108,8 +106,12 @@ async function login(req, res) {
 }
 
 async function profile(req, res) {
-  const { email } = await User.findById;
-  res.json("hola ${email], Puedes Acceder a tu perfil");
+  try {
+    const user = await User.findById(req.user.sub).select("email");
+    res.json("hola ${email}, Puedes Acceder a tu perfil");
+  } catch (err) {
+    res.status(500).json("Server Error");
+  }
 }
 
 export default {

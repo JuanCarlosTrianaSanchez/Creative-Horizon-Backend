@@ -1,6 +1,5 @@
-import { expressjwt } from "express-jwt";
-
 import express from "express";
+import { expressjwt } from "express-jwt";
 import userControllers from "../controllers/userControllers.js";
 
 const router = express.Router();
@@ -12,7 +11,7 @@ router.put("/:id", userControllers.update);
 router.delete("/:id", userControllers.destroy);
 
 router.post(
-  "/api/users/profile",
+  "/api/profile",
   expressjwt({ algorithms: ["HS256"], secret: "secretPassword" }),
   userControllers.profile
 );
