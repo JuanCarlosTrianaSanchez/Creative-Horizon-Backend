@@ -1,4 +1,4 @@
-import Product from "../models/products.js";
+import Product from "../models/product.js";
 
 async function list(req, res) {
   try {

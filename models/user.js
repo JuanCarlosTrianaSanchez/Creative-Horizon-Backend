@@ -10,13 +10,13 @@ const userSchema = mongoose.Schema({
   },
   password: String,
   phone: Number,
-  /* addresses: [
+  city: String,
+  addresses: [
     {
-      type: mongoose.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Address",
     },
-  ], */
-  city: String,
+  ],
 });
 
 const User = mongoose.model("User", userSchema);

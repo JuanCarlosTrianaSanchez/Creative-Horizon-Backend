@@ -15,7 +15,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/purchases", purchaseRoutes);
 app.use("/api/login", loginRoutes);
-app.use("/api/address", addressRoutes);
+app.use("/api/addresses", addressRoutes);
+
 /* app.post("/api/address"); */
 
 app.listen(3000, () => {

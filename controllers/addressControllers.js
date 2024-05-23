@@ -38,7 +38,7 @@ async function create(req, res) {
 
 async function update(req, res) {
   try {
-    const addressFound = await Address.findById(req.params.is);
+    const addressFound = await Address.findById(req.params.id);
     if (!addressFound) {
       return res.status(404).json("Address no found");
     }
