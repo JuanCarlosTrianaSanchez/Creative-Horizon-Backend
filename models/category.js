@@ -1,7 +1,12 @@
 import mongoose from "../config/mongoose.config.js";
 
 const categorySchema = mongoose.Schema({
-  type: String,
+  type: {
+    type: String,
+    enum: ["Pincel", "Pintura", "Lienzo"],
+    required: true,
+  },
+
   size: String,
   color: String,
   material: String,

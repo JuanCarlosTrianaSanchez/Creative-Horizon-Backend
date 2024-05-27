@@ -8,7 +8,7 @@ const productSchema = mongoose.Schema({
   imageUrl: String,
   category: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "category",
+    ref: "Category",
   },
 });
 

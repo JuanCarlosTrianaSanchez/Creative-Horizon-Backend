@@ -12,7 +12,7 @@ async function list(req, res) {
 async function find(req, res) {
   try {
     const productId = req.params.id;
-    const product = await Product.findById(productId);
+    const product = await Product.findById(productId).populate("category");
     if (!product) {
       return res.status(404).json("Product not found");
     }

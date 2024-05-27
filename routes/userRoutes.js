@@ -11,8 +11,8 @@ router.put("/:id", userControllers.update);
 router.delete("/:id", userControllers.destroy);
 
 router.post(
-  "/api/profile",
-  expressjwt({ algorithms: ["HS256"], secret: "secretPassword" }),
+  "/api/user/profile",
+  expressjwt({ algorithms: ["HS256"], secret: process.env.JWT_SECRET }),
   userControllers.profile
 );
 

@@ -92,7 +92,7 @@ async function login(req, res) {
           sub: user.id,
           iat: Date.now(),
         };
-        const token = jwt.sign(tokenPayload, "secretPassword");
+        const token = jwt.sign(tokenPayload, process.env.JWT_SECRET_TOKEN);
         res.json({ token: token });
       } else {
         res.json("Credenciales Incorrectas");
@@ -107,8 +107,8 @@ async function login(req, res) {
 
 async function profile(req, res) {
   try {
-    const user = await User.findById(req.user.sub).select("email");
-    res.json("hola ${email}, Puedes Acceder a tu perfil");
+    const { emal } = await User.findById(req.auth.sub);
+    res.json("Hola ${email}, Puedes Acceder a tu perfil");
   } catch (err) {
     res.status(500).json("Server Error");
   }
