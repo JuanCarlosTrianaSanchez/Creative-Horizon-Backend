@@ -86,6 +86,39 @@ async function destroy(req, res) {
   }
 }
 
+async function register(req, res) {
+  try {
+    const { name, lastname, email, password } = req.body;
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res
+        .status(409)
+        .json({ message: "El usuario ya está registrado." });
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = await User.create({
+      name,
+      lastname,
+      email,
+      password: hashedPassword,
+    });
+    res.status(201).json({
+      message: "Usuario registrado exitosamente.",
+      user: {
+        id: newUser._id,
+        name: newUser.name,
+        lastname: newUser.lastname,
+        email: newUser.email,
+      },
+    });
+  } catch (error) {
+    console.error("Error al registrar el usuario:", error);
+    res
+      .status(500)
+      .json({ message: "Error al registrar usuario", error: error.message });
+  }
+}
+
 async function login(req, res) {
   try {
     const user = await User.findOne({ email: req.body.email });
@@ -124,6 +157,7 @@ export default {
   create,
   update,
   destroy,
+  register,
   login,
   profile,
 };

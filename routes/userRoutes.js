@@ -9,6 +9,7 @@ router.get("/:id", userControllers.find);
 router.post("/", userControllers.create);
 router.put("/:id", userControllers.update);
 router.delete("/:id", userControllers.destroy);
+router.post("/register", userControllers.register);
 
 router.post(
   "/api/user/profile",
