@@ -18,8 +18,6 @@ app.use("/api/purchases", purchaseRoutes);
 app.use("/api/login", loginRoutes);
 app.use("/api/addresses", addressRoutes);
 
-/* app.post("/api/address"); */
-
 app.listen(3000, () => {
   console.log("Servidor corriendo en el puerto 3000");
 });

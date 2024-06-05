@@ -58,7 +58,11 @@ async function update(req, res) {
       ? await bcrypt.hash(req.body.password, 10)
       : userFound.password;
     userFound.phone = req.body.phone || userFound.phone;
-    userFound.addresses = req.body.addresses || userFound.addresses;
+    if (Array.isArray(req.body.addresses)) {
+      userFound.addresses = req.body.addresses.filter(
+        (address) => typeof address === "object"
+      );
+    }
     userFound.city = req.body.city || userFound.city;
 
     await userFound.save();
@@ -93,12 +97,12 @@ async function login(req, res) {
           iat: Date.now(),
         };
         const token = jwt.sign(tokenPayload, process.env.JWT_SECRET_TOKEN);
-        res.json({ token: token });
+        res.status(200).json({ token: token });
       } else {
-        res.json("Credenciales Incorrectas");
+        res.status(401).json("Credenciales Incorrectas");
       }
     } else {
-      res.json("Credenciales Incorrectas");
+      res.status(401).json("Credenciales Incorrectas");
     }
   } catch (err) {
     res.status(500).json("Internal Server Error");
@@ -107,8 +111,8 @@ async function login(req, res) {
 
 async function profile(req, res) {
   try {
-    const { emal } = await User.findById(req.auth.sub);
-    res.json("Hola ${email}, Puedes Acceder a tu perfil");
+    const { email } = await User.findById(req.auth.sub);
+    res.json(`Hola ${email}, Puedes Acceder a tu perfil`);
   } catch (err) {
     res.status(500).json("Server Error");
   }

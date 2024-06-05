@@ -6,10 +6,6 @@ const categorySchema = mongoose.Schema({
     enum: ["Pincel", "Pintura", "Lienzo"],
     required: true,
   },
-
-  size: String,
-  color: String,
-  material: String,
 });
 
 const Category = mongoose.model("Category", categorySchema);

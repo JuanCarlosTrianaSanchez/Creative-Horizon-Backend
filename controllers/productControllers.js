@@ -5,7 +5,9 @@ async function list(req, res) {
     const productos = await Product.find();
     res.json(productos);
   } catch (err) {
-    res.status(500).json("Server Error");
+    res
+      .status(500)
+      .json({ message: "Error al listar productos", error: err.message });
   }
 }
 
@@ -14,11 +16,13 @@ async function find(req, res) {
     const productId = req.params.id;
     const product = await Product.findById(productId).populate("category");
     if (!product) {
-      return res.status(404).json("Product not found");
+      return res.status(404).json({ message: "Product not found" });
     }
     res.status(200).json(product);
   } catch (err) {
-    res.status(500).json("Server Error");
+    res
+      .status(500)
+      .json({ message: "Error al buscar producto", error: err.message });
   }
 }
 
@@ -33,10 +37,13 @@ async function create(req, res) {
       stock: req.body.stock,
       price: req.body.price,
       imageUrl: req.body.imageUrl,
+      material: req.body.material,
     });
     res.json(newProduct);
   } catch (err) {
-    res.status(500).json("Server Error");
+    res
+      .status(500)
+      .json({ message: "Error al crear producto", error: err.message });
   }
 }
 
@@ -44,7 +51,7 @@ async function update(req, res) {
   try {
     const productFound = await Product.findById(req.params.id);
     if (!productFound) {
-      return res.status(404).json("Product not found");
+      return res.status(404).json({ message: "Product not found" });
     }
 
     productFound.name = req.body.name || productFound.name;
@@ -55,11 +62,14 @@ async function update(req, res) {
     productFound.stock = req.body.stock || productFound.stock;
     productFound.price = req.body.price || productFound.price;
     productFound.imageUrl = req.body.imageUrl || productFound.imageUrl;
+    productFound.material = req.body.material || productFound.material;
 
     await productFound.save();
     res.json(productFound);
   } catch (err) {
-    res.status(500).json("Server Error");
+    res
+      .status(500)
+      .json({ message: "Error al actualizar producto", error: err.message });
   }
 }
 
@@ -67,11 +77,13 @@ async function destroy(req, res) {
   try {
     const productDeleted = await Product.findByIdAndDelete(req.params.id);
     if (!productDeleted) {
-      return res.status(404).json("Product not found");
+      return res.status(404).json({ message: "Product not found" });
     }
     res.json("Product deleted");
   } catch (err) {
-    res.status(500).json("Server Error");
+    res
+      .status(500)
+      .json({ message: "Error al eliminar producto", error: err.message });
   }
 }
 

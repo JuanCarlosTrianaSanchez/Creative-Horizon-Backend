@@ -1,16 +1,29 @@
-import mongoose from "../config/mongoose.config.js";
+import mongoose from "mongoose";
 
-const purchaseSchema = mongoose.Schema({
+const { Schema } = mongoose;
+
+const purchaseSchema = new Schema({
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
   products: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-      required: true,
+      product: {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        required: true,
+        min: 1,
+      },
+      priceAtPurchase: {
+        type: Number,
+        required: true,
+      },
     },
   ],
   total: {
@@ -20,6 +33,16 @@ const purchaseSchema = mongoose.Schema({
   paymentMethod: {
     type: String,
     required: true,
+    enum: ["tarjeta_de_credito", "tarejeta_debito", "neki", "daviplata"],
+  },
+  status: {
+    type: String,
+    enum: ["pendiente", "completa", "cancelado"],
+    default: "pending",
+  },
+  date: {
+    type: Date,
+    default: Date.now,
   },
 });
 

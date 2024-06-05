@@ -5,7 +5,9 @@ async function list(req, res) {
     const addresses = await Address.find();
     res.json(addresses);
   } catch (err) {
-    res.status(500).json("Server Error List");
+    res
+      .status(500)
+      .json({ message: "Error al listar direcciones", error: err.message });
   }
 }
 
@@ -18,7 +20,9 @@ async function find(req, res) {
     }
     res.status(200).json(address);
   } catch (err) {
-    res.status(500).json("Server Error");
+    res
+      .status(500)
+      .json({ message: "Error al buscar dirección", error: err.message });
   }
 }
 
@@ -32,10 +36,11 @@ async function create(req, res) {
     });
     res.json(newAddress);
   } catch (err) {
-    res.status(500).json("Server Error");
+    res
+      .status(500)
+      .json({ message: "Error al crear dirección", error: err.message });
   }
 }
-
 async function update(req, res) {
   try {
     const addressFound = await Address.findById(req.params.id);
@@ -51,7 +56,9 @@ async function update(req, res) {
 
     res.json(addressFound);
   } catch (err) {
-    res.status(500).json("Internal Server Error");
+    res
+      .status(500)
+      .json({ message: "Error al actualizar dirección", error: err.message });
   }
 }
 
@@ -63,7 +70,9 @@ async function destroy(req, res) {
     }
     res.json("Direccion Eliminada");
   } catch (err) {
-    res.status(500).json("Server Error");
+    res
+      .status(500)
+      .json({ message: "Error al eliminar dirección", error: err.message });
   }
 }
 
