@@ -129,7 +129,7 @@ async function login(req, res) {
           sub: user.id,
           iat: Date.now(),
         };
-        const token = jwt.sign(tokenPayload, process.env.JWT_SECRET_TOKEN);
+        const token = jwt.sign(tokenPayload, process.env.JWT_SECRET);
         res.status(200).json({ token: token });
       } else {
         res.status(401).json("Credenciales Incorrectas");

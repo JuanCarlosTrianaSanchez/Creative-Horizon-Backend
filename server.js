@@ -1,4 +1,5 @@
 import "dotenv/config";
+import cors from "cors";
 import express from "express";
 import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
@@ -10,6 +11,7 @@ import path from "path";
 
 const app = express();
 
+app.use(cors())
 app.use(express.json());
 
 const __dirname = path.resolve();
