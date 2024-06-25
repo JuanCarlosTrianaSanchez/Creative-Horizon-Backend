@@ -38,6 +38,8 @@ async function create(req, res) {
       price: req.body.price,
       imageUrl: req.body.imageUrl,
       material: req.body.material,
+      description: req.body.description,
+      featured: req.body.featured || false,
     });
     res.json(newProduct);
   } catch (err) {
@@ -63,6 +65,8 @@ async function update(req, res) {
     productFound.price = req.body.price || productFound.price;
     productFound.imageUrl = req.body.imageUrl || productFound.imageUrl;
     productFound.material = req.body.material || productFound.material;
+    productFound.description = req.body.description || productFound.description;
+    productFound.featured = req.body.featured || productFound.featured;
 
     await productFound.save();
     res.json(productFound);
