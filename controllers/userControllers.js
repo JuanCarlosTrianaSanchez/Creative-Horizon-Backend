@@ -63,7 +63,6 @@ async function update(req, res) {
         (address) => typeof address === "object"
       );
     }
-    userFound.city = req.body.city || userFound.city;
 
     await userFound.save();
 
