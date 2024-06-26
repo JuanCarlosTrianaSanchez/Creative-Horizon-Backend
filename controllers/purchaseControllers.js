@@ -16,7 +16,7 @@ async function find(req, res) {
       "products.product"
     );
     if (!purchase) {
-      return res.status(404).json("Purchase not found"); // Corregido mensaje inconsistente
+      return res.status(404).json("Purchase not found");
     }
     res.status(200).json(purchase);
   } catch (err) {

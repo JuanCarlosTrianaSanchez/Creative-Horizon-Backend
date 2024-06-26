@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
+import { login } from "./authController.js";
 
 async function list(req, res) {
   try {
@@ -26,21 +27,19 @@ async function find(req, res) {
 
 async function create(req, res) {
   try {
-    const password = req.body.password;
-    const hash = await bcrypt.hash(password, 10);
-
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const newUser = await User.create({
       name: req.body.name,
       lastname: req.body.lastname,
-      email: req.body.email,
-      password: hash,
-      phone: req.body.phone,
       addresses: req.body.addresses,
-      city: req.body.city,
+      phone: req.body.phone,
+      email: req.body.email,
+      password: hashedPassword,
     });
-    res.json(newUser);
+    return res.status(201).json(newUser);
   } catch (err) {
-    res.status(500).json("Server Error");
+    console.error("Error en el servidor al crear usuario:", err);
+    return res.status(500).json("Error en el servidor al crear usuario");
   }
 }
 
@@ -115,29 +114,6 @@ async function register(req, res) {
     res
       .status(500)
       .json({ message: "Error al registrar usuario", error: error.message });
-  }
-}
-
-async function login(req, res) {
-  try {
-    const user = await User.findOne({ email: req.body.email });
-    if (user !== null) {
-      const hashValido = await bcrypt.compare(req.body.password, user.password);
-      if (hashValido) {
-        const tokenPayload = {
-          sub: user.id,
-          iat: Date.now(),
-        };
-        const token = jwt.sign(tokenPayload, process.env.JWT_SECRET);
-        res.status(200).json({ token: token });
-      } else {
-        res.status(401).json("Credenciales Incorrectas");
-      }
-    } else {
-      res.status(401).json("Credenciales Incorrectas");
-    }
-  } catch (err) {
-    res.status(500).json("Internal Server Error");
   }
 }
 
