@@ -6,12 +6,12 @@ import userRoutes from "./routes/userRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import purchaseRoutes from "./routes/purchaseRoutes.js";
 import loginRoutes from "./routes/loginRoutes.js";
-import addressRoutes from "./routes/addressRoutes.js";
+import authRoutes from "./routes/authRoutes.js"; // Importar las rutas de autenticación
 import path from "path";
 
 const app = express();
 
-app.use(cors())
+app.use(cors());
 app.use(express.json());
 
 const __dirname = path.resolve();
@@ -25,7 +25,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/purchases", purchaseRoutes);
 app.use("/api/login", loginRoutes);
-app.use("/api/addresses", addressRoutes);
+app.use("/api/auth", authRoutes); // Montar las rutas de autenticación
 
 app.listen(3000, () => {
   console.log("Servidor corriendo en el puerto 3000");

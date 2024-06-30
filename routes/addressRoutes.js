@@ -1,4 +1,4 @@
-import express from "express";
+/* import express from "express";
 import addressControllers from "../controllers/addressControllers.js";
 
 const router = express.Router();
@@ -10,3 +10,4 @@ router.put("/:id", addressControllers.update);
 router.delete("/:id", addressControllers.destroy);
 
 export default router;
+ */

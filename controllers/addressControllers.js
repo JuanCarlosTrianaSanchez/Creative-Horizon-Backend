@@ -1,4 +1,4 @@
-import Address from "../models/address.js";
+/* import Address from "../models/address.js";
 
 async function list(req, res) {
   try {
@@ -83,3 +83,4 @@ export default {
   update,
   destroy,
 };
+ */

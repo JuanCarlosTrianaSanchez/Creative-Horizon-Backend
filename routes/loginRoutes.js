@@ -1,8 +1,9 @@
 import express from "express";
-import loginControllers from "../controllers/loginControllers.js";
+import { login } from "../controllers/loginControllers.js"; // Ajusta la ruta según la estructura de tu proyecto
 
 const router = express.Router();
 
-router.post("/", loginControllers.login);
+// Ruta para el login de usuarios
+router.post("/", login);
 
 export default router;

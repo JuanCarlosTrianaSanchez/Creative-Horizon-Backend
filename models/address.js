@@ -1,4 +1,4 @@
-import mongoose from "../config/mongoose.config.js";
+/* import mongoose from "../config/mongoose.config.js";
 
 const addressSchema = mongoose.Schema(
   {
@@ -40,3 +40,4 @@ const addressSchema = mongoose.Schema(
 const Address = mongoose.model("Address", addressSchema);
 
 export default Address;
+ */
