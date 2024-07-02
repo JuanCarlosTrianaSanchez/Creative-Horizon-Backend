@@ -6,7 +6,7 @@ import userRoutes from "./routes/userRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import purchaseRoutes from "./routes/purchaseRoutes.js";
 import loginRoutes from "./routes/loginRoutes.js";
-import authRoutes from "./routes/authRoutes.js"; // Importar las rutas de autenticación
+import authRoutes from "./routes/authRoutes.js";
 import path from "path";
 
 const app = express();
@@ -25,8 +25,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/purchases", purchaseRoutes);
 app.use("/api/login", loginRoutes);
-app.use("/api/auth", authRoutes); // Montar las rutas de autenticación
-
+app.use("/api/auth", authRoutes);
 app.listen(3000, () => {
   console.log("Servidor corriendo en el puerto 3000");
 });

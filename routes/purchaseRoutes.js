@@ -1,12 +1,19 @@
 import express from "express";
-import purchaseControllers from "../controllers/purchaseControllers.js";
+import { expressjwt } from "express-jwt";
+import userControllers from "../controllers/userControllers.js";
 
 const router = express.Router();
 
-router.get("/", purchaseControllers.list);
-router.get("/:id", purchaseControllers.find);
-router.post("/", purchaseControllers.create);
-router.put("/:id", purchaseControllers.update);
-router.delete("/:id", purchaseControllers.destroy);
+router.get("/", userControllers.list);
+router.get("/:id", userControllers.find);
+router.put("/:id", userControllers.update);
+router.delete("/:id", userControllers.destroy);
+router.post("/register", userControllers.register);
+
+router.post(
+  "/profile",
+  expressjwt({ algorithms: ["HS256"], secret: process.env.JWT_SECRET }),
+  userControllers.profile
+);
 
 export default router;

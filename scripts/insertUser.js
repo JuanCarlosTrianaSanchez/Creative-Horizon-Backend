@@ -1,6 +1,6 @@
-import mongoose from "./config/mongoose.config.js";
+import mongoose from "../config/mongoose.config.js";
 import bcrypt from "bcryptjs";
-import User from "./models/user.js";
+import User from "../models/user.js";
 
 const insertUser = async () => {
   try {
