@@ -33,12 +33,12 @@ const purchaseSchema = new Schema({
   paymentMethod: {
     type: String,
     required: true,
-    enum: ["tarjeta_de_credito", "tarejeta_debito", "neki", "daviplata"],
+    enum: ["tarjeta_de_credito", "tarjeta_debito", "nequi", "daviplata"],
   },
   status: {
     type: String,
     enum: ["pendiente", "completa", "cancelado"],
-    default: "pending",
+    default: "pendiente",
   },
   date: {
     type: Date,

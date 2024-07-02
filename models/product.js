@@ -11,7 +11,6 @@ const productSchema = mongoose.Schema({
   material: String,
   description: String,
   featured: { type: Boolean, default: false },
-
   category: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Category",

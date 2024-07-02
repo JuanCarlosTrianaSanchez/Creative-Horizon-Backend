@@ -1,19 +1,51 @@
-import express from "express";
-import { expressjwt } from "express-jwt";
-import userControllers from "../controllers/userControllers.js";
+import mongoose from "mongoose";
 
-const router = express.Router();
+const { Schema } = mongoose;
 
-router.get("/", userControllers.list);
-router.get("/:id", userControllers.find);
-router.put("/:id", userControllers.update);
-router.delete("/:id", userControllers.destroy);
-router.post("/register", userControllers.register);
+const purchaseSchema = new Schema({
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  products: [
+    {
+      product: {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        required: true,
+        min: 1,
+      },
+      priceAtPurchase: {
+        type: Number,
+        required: true,
+      },
+    },
+  ],
+  total: {
+    type: Number,
+    required: true,
+  },
+  paymentMethod: {
+    type: String,
+    required: true,
+    enum: ["tarjeta_de_credito", "tarjeta_debito", "nequi", "daviplata"],
+  },
+  status: {
+    type: String,
+    enum: ["pendiente", "completa", "cancelado"],
+    default: "pendiente",
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
-router.post(
-  "/profile",
-  expressjwt({ algorithms: ["HS256"], secret: process.env.JWT_SECRET }),
-  userControllers.profile
-);
+const Purchase = mongoose.model("Purchase", purchaseSchema);
 
-export default router;
+export default Purchase;

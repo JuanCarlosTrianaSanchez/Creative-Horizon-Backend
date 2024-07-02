@@ -4,8 +4,7 @@ import User from "../models/user.js";
 
 const insertUser = async () => {
   try {
-    await mongoose.connect("mongodb://127.0.0.1/creativeHorizon");
-
+    // No necesitamos llamar a mongoose.connect aquí
     const hashedPassword = await bcrypt.hash("password123", 10);
     const user = new User({
       name: "Test",

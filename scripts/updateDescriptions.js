@@ -7,16 +7,7 @@ const generateDescription = (product) => {
 
 const updateDescriptions = async () => {
   try {
-    if (mongoose.connection.readyState === 0) {
-      await mongoose.connect(
-        "mongodb://localhost:27017/nombre_de_tu_base_de_datos",
-        {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-        }
-      );
-    }
-
+    // No necesitamos llamar a mongoose.connect aquí
     const products = await Product.find();
     for (let product of products) {
       product.description = generateDescription(product);
