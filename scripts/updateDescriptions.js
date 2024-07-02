@@ -7,7 +7,6 @@ const generateDescription = (product) => {
 
 const updateDescriptions = async () => {
   try {
-    // No necesitamos llamar a mongoose.connect aquí
     const products = await Product.find();
     for (let product of products) {
       product.description = generateDescription(product);

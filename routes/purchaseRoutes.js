@@ -1,51 +1,24 @@
-import mongoose from "mongoose";
+import express from "express";
+import Purchase from "../models/purchase.js";
 
-const { Schema } = mongoose;
+const router = express.Router();
 
-const purchaseSchema = new Schema({
-  userId: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  products: [
-    {
-      product: {
-        type: Schema.Types.ObjectId,
-        ref: "Product",
-        required: true,
-      },
-      quantity: {
-        type: Number,
-        required: true,
-        min: 1,
-      },
-      priceAtPurchase: {
-        type: Number,
-        required: true,
-      },
-    },
-  ],
-  total: {
-    type: Number,
-    required: true,
-  },
-  paymentMethod: {
-    type: String,
-    required: true,
-    enum: ["tarjeta_de_credito", "tarjeta_debito", "nequi", "daviplata"],
-  },
-  status: {
-    type: String,
-    enum: ["pendiente", "completa", "cancelado"],
-    default: "pendiente",
-  },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
+router.post("/", async (req, res) => {
+  try {
+    const { userId, products, total, paymentMethod } = req.body;
+    const newPurchase = new Purchase({
+      userId,
+      products,
+      total,
+      paymentMethod,
+    });
+    await newPurchase.save();
+    res.status(201).json(newPurchase);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error al crear la orden de compra", error });
+  }
 });
 
-const Purchase = mongoose.model("Purchase", purchaseSchema);
-
-export default Purchase;
+export default router;

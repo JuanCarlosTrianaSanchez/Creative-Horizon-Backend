@@ -4,7 +4,6 @@ import User from "../models/user.js";
 
 const insertUser = async () => {
   try {
-    // No necesitamos llamar a mongoose.connect aquí
     const hashedPassword = await bcrypt.hash("password123", 10);
     const user = new User({
       name: "Test",
