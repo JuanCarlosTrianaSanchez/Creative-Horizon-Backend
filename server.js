@@ -12,14 +12,15 @@ import path from "path";
 
 const app = express();
 
-// Middleware
+// Configuración de CORS para permitir solicitudes desde http://localhost:4400 y http://localhost:4200
 app.use(
   cors({
-    origin: "http://localhost:4200",
+    origin: ["http://localhost:4200", "http://localhost:4400"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
 app.use(express.json());
 
 const __dirname = path.resolve();
@@ -28,7 +29,7 @@ app.use(
   express.static(path.join(__dirname, "assets/images"))
 );
 
-// Rutas
+// Usa solo productRoutes para /api/products
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/categories", categoryRoutes);

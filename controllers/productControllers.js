@@ -1,5 +1,26 @@
 import Product from "../models/product.js";
 
+// Función para buscar productos destacados
+async function search(req, res) {
+  try {
+    const { featured } = req.query;
+    let filter = {};
+
+    // Convertir el parámetro 'featured' a booleano si está presente
+    if (featured !== undefined) {
+      filter.featured = featured === "true";
+    }
+
+    // Buscar productos con el filtro aplicado
+    const products = await Product.find(filter).populate("category");
+    res.json(products);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error al buscar productos", error: err.message });
+  }
+}
+
 async function list(req, res) {
   try {
     const productos = await Product.find().populate("category");
@@ -97,4 +118,5 @@ export default {
   create,
   update,
   destroy,
+  search,
 };
