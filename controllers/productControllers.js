@@ -1,17 +1,14 @@
 import Product from "../models/product.js";
 
-// Función para buscar productos destacados
 async function search(req, res) {
   try {
     const { featured } = req.query;
     let filter = {};
 
-    // Convertir el parámetro 'featured' a booleano si está presente
     if (featured !== undefined) {
       filter.featured = featured === "true";
     }
 
-    // Buscar productos con el filtro aplicado
     const products = await Product.find(filter).populate("category");
     res.json(products);
   } catch (err) {

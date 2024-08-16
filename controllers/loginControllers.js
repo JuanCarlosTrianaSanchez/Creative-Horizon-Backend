@@ -18,7 +18,6 @@ const login = async (req, res) => {
     console.log("Plain password:", password);
     console.log("Hashed password from DB:", user.password);
 
-    // Línea de prueba para verificar hashCompare
     const isMatch = await user.hashCompare(password);
     console.log("Using hashCompare method result:", isMatch);
 
