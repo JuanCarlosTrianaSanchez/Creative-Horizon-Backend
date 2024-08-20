@@ -8,6 +8,7 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 import purchaseRoutes from "./routes/purchaseRoutes.js";
 import loginRoutes from "./routes/loginRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import favoriteRoutes from "./routes/favoritesRoutes.js";
 import path from "path";
 
 const app = express();
@@ -34,6 +35,7 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/purchases", purchaseRoutes);
 app.use("/api/login", loginRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/favorites", favoriteRoutes);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
