@@ -1,11 +1,12 @@
-const express = require("express");
-const router = express.Router();
-const {
+import express from "express";
+import {
   addFavorite,
   removeFavorite,
   getFavorites,
   isFavorite,
-} = require("../controllers/favoritesController");
+} from "../controllers/favoritesController.js";
+
+const router = express.Router();
 
 router.post("/:userId/:productId/add", addFavorite);
 
@@ -15,4 +16,4 @@ router.get("/:userId", getFavorites);
 
 router.get("/:userId/:productId/isFavorite", isFavorite);
 
-module.exports = router;
+export default router;

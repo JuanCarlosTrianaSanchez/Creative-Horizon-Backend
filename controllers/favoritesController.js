@@ -1,7 +1,7 @@
-const Product = require("../models/productModel");
-const User = require("../models/userModel");
+import Product from "../models/productModel.js";
+import User from "../models/userModel.js";
 
-exports.addFavorite = async (req, res) => {
+export const addFavorite = async (req, res) => {
   try {
     const { userId } = req.params;
     const { productId } = req.body;
@@ -30,7 +30,7 @@ exports.addFavorite = async (req, res) => {
   }
 };
 
-exports.removeFavorite = async (req, res) => {
+export const removeFavorite = async (req, res) => {
   try {
     const { userId } = req.params;
     const { productId } = req.body;
@@ -56,7 +56,7 @@ exports.removeFavorite = async (req, res) => {
   }
 };
 
-exports.getFavorites = async (req, res) => {
+export const getFavorites = async (req, res) => {
   try {
     const { userId } = req.params;
 
@@ -74,5 +74,3 @@ exports.getFavorites = async (req, res) => {
       .send({ message: "Error al obtener favoritos", error: error.message });
   }
 };
-
-//
