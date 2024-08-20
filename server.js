@@ -8,8 +8,7 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 import purchaseRoutes from "./routes/purchaseRoutes.js";
 import loginRoutes from "./routes/loginRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
-const favoriteRoutes = require("./routes/favoritesRoutes.js");
-import path from "path";
+import favoriteRoutes from "./routes/favoritesRoutes.js";
 
 const app = express();
 
