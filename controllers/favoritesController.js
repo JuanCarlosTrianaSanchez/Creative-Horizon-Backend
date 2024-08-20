@@ -74,3 +74,5 @@ exports.getFavorites = async (req, res) => {
       .send({ message: "Error al obtener favoritos", error: error.message });
   }
 };
+
+//
