@@ -9,7 +9,7 @@ import purchaseRoutes from "./routes/purchaseRoutes.js";
 import loginRoutes from "./routes/loginRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import favoriteRoutes from "./routes/favoritesRoutes.js";
-
+import path from "path";
 const app = express();
 
 app.use(
@@ -21,6 +21,11 @@ app.use(
 );
 
 app.use(express.json());
+
+app.use(
+  "/assets/images",
+  express.static(path.join(process.cwd(), "assets/images"))
+);
 
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
