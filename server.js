@@ -22,6 +22,12 @@ app.use(
 
 app.use(express.json());
 
+const __dirname = path.resolve();
+app.use(
+  "/assets/images",
+  express.static(path.join(__dirname, "assets/images"))
+);
+
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/categories", categoryRoutes);
