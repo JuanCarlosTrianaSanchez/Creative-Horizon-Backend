@@ -9,6 +9,7 @@ import purchaseRoutes from "./routes/purchaseRoutes.js";
 import loginRoutes from "./routes/loginRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import favoriteRoutes from "./routes/favoritesRoutes.js";
+import path from "path";
 
 const app = express();
 
