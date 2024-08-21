@@ -10,6 +10,7 @@ async function list(req, res) {
       .json({ message: "Error al listar categorías", error: err.message });
   }
 }
+
 async function find(req, res) {
   try {
     const categoryId = req.params.id;
@@ -55,9 +56,25 @@ async function update(req, res) {
   }
 }
 
+async function deleteCategory(req, res) {
+  try {
+    const categoryId = req.params.id;
+    const category = await Category.findByIdAndDelete(categoryId);
+    if (!category) {
+      return res.status(404).json({ message: "Categoría no encontrada" });
+    }
+    res.status(200).json({ message: "Categoría eliminada correctamente" });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error al eliminar categoría", error: err.message });
+  }
+}
+
 export default {
   list,
   find,
   create,
   update,
+  deleteCategory,
 };
