@@ -74,3 +74,25 @@ export const getFavorites = async (req, res) => {
       .send({ message: "Error al obtener favoritos", error: error.message });
   }
 };
+
+export const isFavorite = async (req, res) => {
+  try {
+    const { userId, productId } = req.params;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).send({ message: "Usuario no encontrado" });
+    }
+
+    const isFavorite = user.favorites.includes(productId);
+
+    res.status(200).send({
+      message: isFavorite ? "Es favorito" : "No es favorito",
+      isFavorite,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: "Error al verificar favorito", error: error.message });
+  }
+};
